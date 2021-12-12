@@ -16,12 +16,24 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class Robot extends TimedRobot {
 
+  // Instance Variables
+
+
+  int robotPeriodicCalls = 0;
+  int autonomousInitCalls = 0;
+  int autonomousPeriodicCalls = 0;
+  int teleopInitCalls = 0;
+  int teleopPeriodicCalls = 0;
+
   /**
    * This function is run when the robot is first started up and should be used for any
    * initialization code.
    */
   @Override
-  public void robotInit() {}
+  public void robotInit() {
+
+    System.out.println("Robot Has Initialized");
+  }
 
   /**
    * This function is called every robot packet, no matter the mode. Use this for items like
@@ -31,7 +43,11 @@ public class Robot extends TimedRobot {
    * SmartDashboard integrated updating.
    */
   @Override
-  public void robotPeriodic() {}
+  public void robotPeriodic() {
+    robotPeriodicCalls += 1;
+
+    System.out.println(robotPeriodicCalls);
+  }
 
   /**
    * This autonomous (along with the chooser code above) shows how to select between different
@@ -44,19 +60,39 @@ public class Robot extends TimedRobot {
    * chooser code above as well.
    */
   @Override
-  public void autonomousInit() {}
+  public void autonomousInit() {
+    System.out.println("Starting Autonomous");
+
+    autonomousInitCalls += 1;
+    autonomousPeriodicCalls = 0;
+    // ^ This is because autonomousPeriodicCalls is supposed to track how many times the periodic has called for this specific session of autonomous.
+  }
 
   /** This function is called periodically during autonomous. */
   @Override
-  public void autonomousPeriodic() {}
+  public void autonomousPeriodic() {
+    autonomousPeriodicCalls += 1;
+
+    System.out.println(autonomousInitCalls + "," + autonomousPeriodicCalls);
+  }
 
   /** This function is called once when teleop is enabled. */
   @Override
-  public void teleopInit() {}
+  public void teleopInit() {
+    System.out.println("Starting Teleop");
+
+    teleopInitCalls += 1;
+    teleopPeriodicCalls = 0;
+    // ^ This is because autonomousTeleopCalls is supposed to track how many times the periodic has called for this specific session of teleop.
+  }
 
   /** This function is called periodically during operator control. */
   @Override
-  public void teleopPeriodic() {}
+  public void teleopPeriodic() {
+    teleopPeriodicCalls += 1;
+
+    System.out.println(teleopInitCalls + "," + teleopPeriodicCalls);
+  }
 
   /** This function is called once when the robot is disabled. */
   @Override
